@@ -38,10 +38,6 @@ Put this ``element`` to your ``activity_login.xml``
 ##### Next
 Initialize a config in ``onCreate()`` method to setting up the login button in your ``LoginActivity.java``
 ```java
-@Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-
         String client_id = "your_client_id";
         String client_secret = "your_client_secret";
         String redirect_uri = "your_client_id";
@@ -50,6 +46,4 @@ Initialize a config in ``onCreate()`` method to setting up the login button in y
         
         IdentitasConfig config = 
                 new IdentitasConfig(context, client_id, client_secret, redirect_uri, scopes);
-    }
-    }
 ```
