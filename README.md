@@ -66,7 +66,7 @@ Set ``callback`` for the Login Button
 ```
 
 ##### Next step
-Implement onActivityResult() method in your activity, do something like written below
+Implement ``onActivityResult()`` method in your activity, do something like written below
 ```java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
