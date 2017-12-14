@@ -35,15 +35,42 @@ Put this ``element`` to your ``activity_login.xml``
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 ```
-##### Next
+##### Next step
 Initialize a config in ``onCreate()`` method to setting up the login button in your ``LoginActivity.java``
 ```java
-        String client_id = "your_client_id";
-        String client_secret = "your_client_secret";
-        String redirect_uri = "your_client_id";
-        List<String> scopes = new ArrayList<>(); //you can leave it with empty data
-        scopes.add(IdentitasScope.Companion.getPUBLIC()); // this addition just an example
-        
-        IdentitasConfig config = 
-                new IdentitasConfig(context, client_id, client_secret, redirect_uri, scopes);
+    String client_id = "your_client_id";
+    String client_secret = "your_client_secret";
+    String redirect_uri = "your_client_id";
+    List<String> scopes = new ArrayList<>(); //you can leave it with empty data
+    scopes.add(IdentitasScope.Companion.getPUBLIC()); // this addition just an example
+
+    IdentitasConfig config = 
+            new IdentitasConfig(context, client_id, client_secret, redirect_uri, scopes);
+    
+    loginButton.configure(config);
+```
+##### Next step
+Set ``callback`` for the Login Button 
+```java
+    loginButton.setCallback(new Callback<AuthToken>() {
+            @Override
+            public void success(@NotNull Result<AuthToken> result) {
+                //do some action after this login authorized and got some token
+            }
+
+            @Override
+            public void failure(@NotNull IdentitasException exception) {
+                //do some handle when this login got error
+            }
+        });
+```
+
+##### Next step
+Implement onActivityResult() method in your activity, do something like written below
+```java
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        loginButton.onActivityResult(requestCode, resultCode, data);
+    }
 ```
