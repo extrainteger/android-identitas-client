@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/extrainteger/android-identitas-client.svg)](https://jitpack.io/#extrainteger/android-identitas-client)
 
-"Identitas" is a project for centralizing peoples identity so people can easily use their identities to access various apps in the future. This library is part of that whole project, serves as oAuth in the project.
+"Identitas" is a project for centralizing peoples identity so people can easily use their identities to access various apps in the future. This library are part of that whole project, serves as oAuth in the project.
 
 This library written in ``Kotlin``. Sorry for inconsistency or dirty code, please give feedback to make this library better.
 
