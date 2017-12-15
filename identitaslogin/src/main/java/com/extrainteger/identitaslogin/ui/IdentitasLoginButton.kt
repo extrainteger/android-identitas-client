@@ -4,11 +4,19 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.Button
 import android.util.TypedValue
 import android.view.View
 import com.extrainteger.identitaslogin.*
 import com.extrainteger.identitaslogin.models.AuthToken
+import android.util.DisplayMetrics
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.Drawable
+import android.support.graphics.drawable.VectorDrawableCompat
+import android.support.v4.graphics.drawable.DrawableCompat
+import com.extrainteger.identitaslogin.utils.ConnectionState
 
 
 /**
@@ -21,6 +29,7 @@ class IdentitasLoginButton: Button{
 
     private var config: IdentitasConfig? = null
     private var mCallback: Callback<AuthToken>? = null
+    private val TAG = "Login Button"
 
     init {
         setupButton()
@@ -28,13 +37,21 @@ class IdentitasLoginButton: Button{
 
     private fun setupButton() {
         setText("Login with Identitas")
-        setBackgroundColor(resources.getColor(R.color.green))
+        setBackgroundResource(R.drawable.round_button_background)
         setTextColor(resources.getColor(R.color.white))
-        setTextSize(TypedValue.COMPLEX_UNIT_DIP, resources.getDimension(R.dimen.button_text_size))
-        setCompoundDrawables(resources.getDrawable(R.drawable.ic_person_black_24dp), null, null, null)
-        setPadding(20, 0,
-                20, 0);
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+        var icon: Drawable? = VectorDrawableCompat.create(resources, R.drawable.ic_person_black_24dp, null)
+        icon = DrawableCompat.wrap(icon!!)
+        DrawableCompat.setTint(icon!!, resources.getColor(R.color.white))
+        setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
+        setPadding(getSizeInDp(20f), 0,
+                getSizeInDp(20f), 0);
         setOnClickListener(LoginClickListener())
+    }
+
+    private fun getSizeInDp(value: Float): Int{
+        val r = resources
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, r.displayMetrics))
     }
 
     private inner class LoginClickListener : OnClickListener {
@@ -44,13 +61,33 @@ class IdentitasLoginButton: Button{
     }
 
     private fun gotoOAuthActivity(){
-        val intent = Intent(config?.activity, OauthActivity::class.java)
-        intent.putExtra(IdentitasConstants.LOGIN_URL_FIELD, IdentitasConstants.LOGIN_URL_VALUE)
-        intent.putExtra(IdentitasConstants.CLIENT_ID_FIELD, config?.CLIENT_ID)
-        intent.putExtra(IdentitasConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
-        intent.putExtra(IdentitasConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
-        intent.putExtra(IdentitasConstants.SCOPE_FIELD, getScope(config?.SCOPES))
-        config?.activity?.startActivityForResult(intent, IdentitasConstants.LOGIN_ACTIVITY_REQUEST_CODE)
+        if (config!=null) {
+            if (config?.activity!=null){
+                if (config?.CLIENT_ID!=null && config?.CLIENT_SCRET!=null && config?.REDIRECT_URI!=null){
+                    if (ConnectionState(config!!.activity).isConnected()){
+                        val intent = Intent(config?.activity, OauthActivity::class.java)
+                        intent.putExtra(IdentitasConstants.LOGIN_URL_FIELD, IdentitasConstants.LOGIN_URL_VALUE)
+                        intent.putExtra(IdentitasConstants.CLIENT_ID_FIELD, config?.CLIENT_ID)
+                        intent.putExtra(IdentitasConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
+                        intent.putExtra(IdentitasConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
+                        intent.putExtra(IdentitasConstants.SCOPE_FIELD, getScope(config?.SCOPES))
+                        config?.activity?.startActivityForResult(intent, IdentitasConstants.LOGIN_ACTIVITY_REQUEST_CODE)
+                    }
+                    else{
+                        Log.e(TAG, "Not connected to internet !")
+                    }
+                }
+                else{
+                    Log.e(TAG, "Incorrect config !")
+                }
+            }
+            else{
+                Log.e(TAG, "Context/activity can't be blank !")
+            }
+        }
+        else{
+            Log.e(TAG, "Null config detected !")
+        }
     }
 
     private fun getScope(scopes: List<String>?): String? {

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.extrainteger.identitaslogin">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application>
         <activity android:name=".ui.OauthActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
