@@ -71,18 +71,23 @@ class IdentitasLoginButton: Button{
     private fun gotoOAuthActivity(){
         if (config!=null) {
             if (config?.activity!=null){
-                if (config?.CLIENT_ID!=null && config?.CLIENT_SCRET!=null && config?.REDIRECT_URI!=null){
-                    if (ConnectionState(config!!.activity).isConnected()){
-                        val intent = Intent(config?.activity, OauthActivity::class.java)
-                        intent.putExtra(IdentitasConstants.LOGIN_URL_FIELD, IdentitasConstants.LOGIN_URL_VALUE)
-                        intent.putExtra(IdentitasConstants.CLIENT_ID_FIELD, config?.CLIENT_ID)
-                        intent.putExtra(IdentitasConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
-                        intent.putExtra(IdentitasConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
-                        intent.putExtra(IdentitasConstants.SCOPE_FIELD, getScope(config?.SCOPES))
-                        config?.activity?.startActivityForResult(intent, IdentitasConstants.LOGIN_ACTIVITY_REQUEST_CODE)
+                if (config?.CLIENT_ID!="" && config?.CLIENT_SCRET!="" && config?.REDIRECT_URI!=""){
+                    if (config?.CLIENT_ID!=null && config?.CLIENT_SCRET!=null && config?.REDIRECT_URI!=null){
+                        if (ConnectionState(config?.activity).isConnected()){
+                            val intent = Intent(config?.activity, OauthActivity::class.java)
+                            intent.putExtra(IdentitasConstants.LOGIN_URL_FIELD, IdentitasConstants.LOGIN_URL_VALUE)
+                            intent.putExtra(IdentitasConstants.CLIENT_ID_FIELD, config?.CLIENT_ID)
+                            intent.putExtra(IdentitasConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
+                            intent.putExtra(IdentitasConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
+                            intent.putExtra(IdentitasConstants.SCOPE_FIELD, getScope(config?.SCOPES))
+                            config?.activity?.startActivityForResult(intent, IdentitasConstants.LOGIN_ACTIVITY_REQUEST_CODE)
+                        }
+                        else{
+                            Log.e(TAG, "Not connected to internet !")
+                        }
                     }
                     else{
-                        Log.e(TAG, "Not connected to internet !")
+                        Log.e(TAG, "Incorrect config !")
                     }
                 }
                 else{

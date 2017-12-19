@@ -11,9 +11,9 @@ import android.net.NetworkInfo
 /**
  * Created by ali on 17/11/17.
  */
-class ConnectionState(val context: Context){
+class ConnectionState(val context: Context?){
     fun isConnected(): Boolean{
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
         val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
         return isConnected
