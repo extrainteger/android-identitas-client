@@ -6,7 +6,7 @@
 
     <application>
         <activity android:name=".ui.OauthActivity"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
     </application>
 

@@ -23,7 +23,6 @@ class OauthActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         setContentView(R.layout.activity_oauth)
         showLoginPage(intent)
     }
