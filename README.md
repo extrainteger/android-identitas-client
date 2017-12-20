@@ -20,7 +20,7 @@ allprojects {
 next, add the following code to app-level ``build.gradle`` 
 ```groovy
 dependencies {
-    compile 'com.github.extrainteger:android-identitas-client:0.1.3'
+    compile 'com.github.extrainteger:android-identitas-client:0.1.4'
 }
 ```
 
