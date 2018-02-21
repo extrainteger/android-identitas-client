@@ -12,11 +12,15 @@ import retrofit2.Response
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
-import android.view.ViewGroup
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.extrainteger.identitaslogin.R
 import kotlinx.android.synthetic.main.activity_oauth.*
+import android.webkit.WebChromeClient
+
+
 
 
 class OauthActivity : Activity() {
@@ -36,7 +40,7 @@ class OauthActivity : Activity() {
                 IdentitasConstants.GRANT_TYPE)?.enqueue(object : Callback<AuthToken>{
 
             override fun onResponse(call: Call<AuthToken>?, response: Response<AuthToken>?) {
-                progressBar.visibility = View.GONE
+                progressbar.visibility = View.GONE
                 if (response?.isSuccessful!!){
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(IdentitasConstants.ACCESS_TOKEN_FIELD, response.body()?.accessToken)
@@ -54,7 +58,7 @@ class OauthActivity : Activity() {
             }
 
             override fun onFailure(call: Call<AuthToken>?, t: Throwable?) {
-                progressBar.visibility = View.GONE
+                progressbar.visibility = View.GONE
                 val tokenIntent = Intent()
                 tokenIntent.putExtra(IdentitasConstants.GET_TOKEN_EXCEPTION_FIELD, t?.message)
                 setResult(RESULT_OK, tokenIntent)
@@ -64,19 +68,23 @@ class OauthActivity : Activity() {
     }
 
     private fun showLoginPage(intent: Intent) {
+        horizontal_progressbar.max = 100
         val webSettings = webView.settings
-        webSettings.setAllowFileAccess(false)
-        webSettings.setJavaScriptEnabled(false)
-        webSettings.setSaveFormData(false)
+        webSettings.allowFileAccess = false
+        webSettings.javaScriptEnabled = true
+        webSettings.saveFormData = false
         webView.isVerticalScrollBarEnabled = false
         webView.isHorizontalScrollBarEnabled = false
         webView.loadUrl(getLoginUrl(intent))
+        webView.webChromeClient = WebChromeClientDemo()
         webView.webViewClient = object : WebViewClient(){
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                progressBar.visibility = View.GONE
+                progressbar.visibility = View.GONE
                 content.visibility = View.VISIBLE
+                horizontal_progressbar.visibility = View.VISIBLE
+                horizontal_progressbar.progress = 0
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -84,9 +92,23 @@ class OauthActivity : Activity() {
                 if (url!!.startsWith(intent.getStringExtra(IdentitasConstants.REDIRECT_URI_FIELD))){
                     getTokenFromProvider(getUrlParams(url), intent)
                     content.visibility = View.INVISIBLE
-                    progressBar.visibility = View.VISIBLE
+                    progressbar.visibility = View.VISIBLE
+                    horizontal_progressbar.visibility = View.GONE
+                    horizontal_progressbar.progress = 100
                 }
             }
+
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                super.onReceivedError(view, request, error)
+                horizontal_progressbar.visibility = View.GONE
+                horizontal_progressbar.progress = 100
+            }
+        }
+    }
+
+    private inner class WebChromeClientDemo : WebChromeClient() {
+        override fun onProgressChanged(view: WebView, progress: Int) {
+            horizontal_progressbar.setProgress(progress)
         }
     }
 

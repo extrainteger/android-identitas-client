@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
@@ -20,10 +20,19 @@
         android:orientation="vertical"
         android:visibility="gone">
 
+        <ProgressBar
+            android:id="@+id/horizontal_progressbar"
+            android:minHeight="2dp"
+            android:maxHeight="2dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/horizontal_progressbar_background"/>
+
         <WebView
             android:id="@+id/webView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
 
     </LinearLayout>
 
