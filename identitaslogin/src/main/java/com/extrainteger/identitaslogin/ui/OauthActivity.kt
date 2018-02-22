@@ -12,15 +12,9 @@ import retrofit2.Response
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.extrainteger.identitaslogin.R
 import kotlinx.android.synthetic.main.activity_oauth.*
-import android.webkit.WebChromeClient
-
-
 
 
 class OauthActivity : Activity() {
@@ -74,6 +68,7 @@ class OauthActivity : Activity() {
         webSettings.javaScriptEnabled = true
         webSettings.saveFormData = false
         webView.isVerticalScrollBarEnabled = false
+        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE;
         webView.isHorizontalScrollBarEnabled = false
         webView.loadUrl(getLoginUrl(intent))
         webView.webChromeClient = WebChromeClientDemo()
@@ -95,7 +90,6 @@ class OauthActivity : Activity() {
                     progressbar.visibility = View.VISIBLE
                     horizontal_progressbar.visibility = View.GONE
                     horizontal_progressbar.progress = 100
-                    view?.clearCache(true)
                 }
             }
 
