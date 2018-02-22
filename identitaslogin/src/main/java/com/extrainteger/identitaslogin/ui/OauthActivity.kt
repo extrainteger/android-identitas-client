@@ -95,6 +95,7 @@ class OauthActivity : Activity() {
                     progressbar.visibility = View.VISIBLE
                     horizontal_progressbar.visibility = View.GONE
                     horizontal_progressbar.progress = 100
+                    view?.clearCache(true)
                 }
             }
 

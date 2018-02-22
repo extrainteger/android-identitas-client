@@ -37,21 +37,6 @@ class IdentitasLoginButton: Button{
     }
 
     private fun setupButton() {
-//        setText("Login with Identitas")
-//        setBackgroundResource(R.drawable.round_button_background)
-//        setTextColor(resources.getColor(R.color.white))
-//        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-//        if (Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.LOLLIPOP){
-//            var icon: Drawable? = VectorDrawableCompat.create(resources, R.drawable.ic_person_black_24dp, null)
-//            icon = DrawableCompat.wrap(icon!!)
-//            DrawableCompat.setTint(icon!!, resources.getColor(R.color.white))
-//            setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
-//        }
-//        else{
-//            val icon = resources.getDrawable(R.drawable.ic_person_black_24dp)
-//            icon.setColorFilter(resources.getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
-//            setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
-//        }
         setPadding(getSizeInDp(20f), 0,
                 getSizeInDp(20f), 0);
         setOnClickListener(LoginClickListener())
