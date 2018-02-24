@@ -30,17 +30,10 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:progressDrawable="@drawable/horizontal_progressbar_background"/>
 
-        <ScrollView
+        <WebView
+            android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-
-        </ScrollView>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 
