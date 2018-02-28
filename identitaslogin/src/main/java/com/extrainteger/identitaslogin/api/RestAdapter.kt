@@ -13,6 +13,11 @@ import com.extrainteger.identitaslogin.models.AuthToken
 import okhttp3.logging.HttpLoggingInterceptor
 import java.security.NoSuchAlgorithmException
 import javax.net.ssl.SSLContext
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.common.GooglePlayServicesRepairableException
+import com.google.android.gms.security.ProviderInstaller
+
+
 
 
 /**
@@ -111,6 +116,7 @@ class RestAdapter{
 //    }
 
     fun initializeSSLContext(mContext: Context) {
+        println("initializeSSLContext")
         try {
             SSLContext.getInstance("TLSv1.2")
             println("initializeSSLContext initiate success")
@@ -118,5 +124,14 @@ class RestAdapter{
             e.printStackTrace()
             println("initializeSSLContext initiate success")
         }
+        try {
+            ProviderInstaller.installIfNeeded(mContext.applicationContext)
+        } catch (e: GooglePlayServicesRepairableException) {
+            e.printStackTrace()
+        } catch (e: GooglePlayServicesNotAvailableException) {
+            e.printStackTrace()
+        }
+
     }
+
 }

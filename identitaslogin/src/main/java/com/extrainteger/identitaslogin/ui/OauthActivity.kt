@@ -17,7 +17,7 @@ import com.extrainteger.identitaslogin.R
 import kotlinx.android.synthetic.main.activity_oauth.*
 
 
-class OauthActivity : Activity() {
+class OauthActivity : Activity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +37,7 @@ class OauthActivity : Activity() {
             override fun onResponse(call: Call<AuthToken>?, response: Response<AuthToken>?) {
                 progressbar.visibility = View.GONE
                 if (response?.isSuccessful!!){
+                    println("onResponse seccess, provider token : " + response.body()?.accessToken)
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(IdentitasConstants.ACCESS_TOKEN_FIELD, response.body()?.accessToken)
                     tokenIntent.putExtra(IdentitasConstants.REFRESH_TOKEN_FIELD, response.body()?.refreshToken)
@@ -45,6 +46,7 @@ class OauthActivity : Activity() {
                     finish()
                 }
                 else{
+                    println("onResponse failed")
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(IdentitasConstants.GET_TOKEN_ERROR_CODE_FIELD, response.code())
                     setResult(RESULT_OK, tokenIntent)
