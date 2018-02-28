@@ -68,6 +68,8 @@ class OauthActivity : Activity() {
         webSettings.javaScriptEnabled = true
         webSettings.saveFormData = false
         webView.isVerticalScrollBarEnabled = false
+        webView.clearCache(true)
+        webView.clearSslPreferences()
         webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE;
         webView.isHorizontalScrollBarEnabled = false
         webView.loadUrl(getLoginUrl(intent))
