@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Identitas.iml" filepath="$PROJECT_DIR$/Identitas.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-identitas-client.iml" filepath="$PROJECT_DIR$/android-identitas-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-identitas-client.iml" filepath="$PROJECT_DIR$/android-identitas-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/identitaslogin/identitaslogin.iml" filepath="$PROJECT_DIR$/identitaslogin/identitaslogin.iml" />

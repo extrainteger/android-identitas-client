@@ -27,6 +27,7 @@ class OauthActivity : Activity() {
 
     private fun getTokenFromProvider(code: String?, intent: Intent) {
         val restAdapter = RestAdapter()
+        restAdapter.initializeSSLContext(this)
         restAdapter.apiClient?.getNewAccessToken(code,
                 intent.getStringExtra(IdentitasConstants.CLIENT_ID_FIELD),
                 intent.getStringExtra(IdentitasConstants.CLIENT_SECRET_FIELD),
@@ -126,4 +127,6 @@ class OauthActivity : Activity() {
                 "&"+IdentitasConstants.REDIRECT_URI_FIELD+"=" + intent.getStringExtra(IdentitasConstants.REDIRECT_URI_FIELD) +
                 "&"+IdentitasConstants.SCOPE_FIELD+"="+intent.getStringExtra(IdentitasConstants.SCOPE_FIELD)
     }
+
+
 }

@@ -11,6 +11,8 @@ import okhttp3.OkHttpClient
 import android.content.SharedPreferences
 import com.extrainteger.identitaslogin.models.AuthToken
 import okhttp3.logging.HttpLoggingInterceptor
+import java.security.NoSuchAlgorithmException
+import javax.net.ssl.SSLContext
 
 
 /**
@@ -107,4 +109,14 @@ class RestAdapter{
 //        }
 //
 //    }
+
+    fun initializeSSLContext(mContext: Context) {
+        try {
+            SSLContext.getInstance("TLSv1.2")
+            println("initializeSSLContext initiate success")
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+            println("initializeSSLContext initiate success")
+        }
+    }
 }
