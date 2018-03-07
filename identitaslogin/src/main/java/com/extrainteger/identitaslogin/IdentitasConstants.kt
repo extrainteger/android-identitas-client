@@ -6,7 +6,7 @@ package com.extrainteger.identitaslogin
 class IdentitasConstants {
     companion object {
         val LOGIN_URL_FIELD = "LOGIN_URL"
-        val LOGIN_URL_VALUE = "https://identitas.extrainteger.com/oauth/authorize"
+        val LOGIN_URL_VALUE = "https://symbolic.id/oauth/authorize"
         val LOGIN_ACTIVITY_REQUEST_CODE = 212
         val CLIENT_ID_FIELD = "client_id"
         val CLIENT_SECRET_FIELD = "client_secret"
@@ -14,7 +14,7 @@ class IdentitasConstants {
         val SCOPE_FIELD = "scope"
         val RESPONSE_TYPE_FIELD = "response_type"
         val RESPONSE_TYPE_VALUE = "code"
-        val BASE_URL_VALUE = "https://identitas.extrainteger.com"
+        val BASE_URL_VALUE = "https://symbolic.id"
         val GRANT_TYPE = "authorization_code"
         val ACCESS_TOKEN_FIELD = "access_token"
         val REFRESH_TOKEN_FIELD = "refresh_token"
