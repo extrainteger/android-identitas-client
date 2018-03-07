@@ -22,12 +22,12 @@ class OauthActivity : Activity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_oauth)
+        clearWebviewCookies()
         showLoginPage(intent)
     }
 
     private fun getTokenFromProvider(code: String?, intent: Intent) {
         val restAdapter = RestAdapter()
-        restAdapter.initializeSSLContext(this)
         restAdapter.apiClient?.getNewAccessToken(code,
                 intent.getStringExtra(IdentitasConstants.CLIENT_ID_FIELD),
                 intent.getStringExtra(IdentitasConstants.CLIENT_SECRET_FIELD),
@@ -62,6 +62,12 @@ class OauthActivity : Activity(){
                 finish()
             }
         })
+    }
+
+    private fun clearWebviewCookies(){
+        CookieSyncManager.createInstance(this)
+        var cookieManager = CookieManager.getInstance()
+        cookieManager.removeAllCookie()
     }
 
     private fun showLoginPage(intent: Intent) {
