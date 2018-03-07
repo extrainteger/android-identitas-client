@@ -1,16 +1,12 @@
 package com.extrainteger.identitaslogin.api
 
-import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import com.extrainteger.identitaslogin.IdentitasConstants
-import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import okhttp3.OkHttpClient
-import android.content.SharedPreferences
-import com.extrainteger.identitaslogin.models.AuthToken
 import okhttp3.logging.HttpLoggingInterceptor
+
+
 
 
 /**

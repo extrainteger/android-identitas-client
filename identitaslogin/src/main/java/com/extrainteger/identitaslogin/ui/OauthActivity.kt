@@ -17,11 +17,12 @@ import com.extrainteger.identitaslogin.R
 import kotlinx.android.synthetic.main.activity_oauth.*
 
 
-class OauthActivity : Activity() {
+class OauthActivity : Activity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_oauth)
+        clearWebviewCookies()
         showLoginPage(intent)
     }
 
@@ -36,6 +37,7 @@ class OauthActivity : Activity() {
             override fun onResponse(call: Call<AuthToken>?, response: Response<AuthToken>?) {
                 progressbar.visibility = View.GONE
                 if (response?.isSuccessful!!){
+                    println("onResponse seccess, provider token : " + response.body()?.accessToken)
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(IdentitasConstants.ACCESS_TOKEN_FIELD, response.body()?.accessToken)
                     tokenIntent.putExtra(IdentitasConstants.REFRESH_TOKEN_FIELD, response.body()?.refreshToken)
@@ -44,6 +46,7 @@ class OauthActivity : Activity() {
                     finish()
                 }
                 else{
+                    println("onResponse failed")
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(IdentitasConstants.GET_TOKEN_ERROR_CODE_FIELD, response.code())
                     setResult(RESULT_OK, tokenIntent)
@@ -61,6 +64,12 @@ class OauthActivity : Activity() {
         })
     }
 
+    private fun clearWebviewCookies(){
+        CookieSyncManager.createInstance(this)
+        var cookieManager = CookieManager.getInstance()
+        cookieManager.removeAllCookie()
+    }
+
     private fun showLoginPage(intent: Intent) {
         horizontal_progressbar.max = 100
         val webSettings = webView.settings
@@ -68,8 +77,6 @@ class OauthActivity : Activity() {
         webSettings.javaScriptEnabled = true
         webSettings.saveFormData = false
         webView.isVerticalScrollBarEnabled = false
-        webView.clearCache(true)
-        webView.clearSslPreferences()
         webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE;
         webView.isHorizontalScrollBarEnabled = false
         webView.loadUrl(getLoginUrl(intent))
@@ -126,4 +133,6 @@ class OauthActivity : Activity() {
                 "&"+IdentitasConstants.REDIRECT_URI_FIELD+"=" + intent.getStringExtra(IdentitasConstants.REDIRECT_URI_FIELD) +
                 "&"+IdentitasConstants.SCOPE_FIELD+"="+intent.getStringExtra(IdentitasConstants.SCOPE_FIELD)
     }
+
+
 }
