@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v4.graphics.drawable.DrawableCompat
+import android.widget.Toast
 import com.extrainteger.identitaslogin.utils.ConnectionState
 
 
@@ -38,7 +39,7 @@ class IdentitasLoginButton: Button{
 
     private fun setupButton() {
         setPadding(getSizeInDp(20f), 0,
-                getSizeInDp(20f), 0);
+                getSizeInDp(20f), 0)
         setOnClickListener(LoginClickListener())
     }
 
@@ -60,14 +61,16 @@ class IdentitasLoginButton: Button{
                     if (config?.CLIENT_ID!=null && config?.CLIENT_SCRET!=null && config?.REDIRECT_URI!=null){
                         if (ConnectionState(config?.activity).isConnected()){
                             val intent = Intent(config?.activity, OauthActivity::class.java)
-                            intent.putExtra(IdentitasConstants.LOGIN_URL_FIELD, IdentitasConstants.LOGIN_URL_VALUE)
+                            intent.putExtra(IdentitasConstants.BASE_URL_FIELD, config?.BASE_URL)
                             intent.putExtra(IdentitasConstants.CLIENT_ID_FIELD, config?.CLIENT_ID)
                             intent.putExtra(IdentitasConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
                             intent.putExtra(IdentitasConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
                             intent.putExtra(IdentitasConstants.SCOPE_FIELD, getScope(config?.SCOPES))
+                            intent.putExtra(IdentitasConstants.REFERER_FIELD, config?.REFERER)
                             config?.activity?.startActivityForResult(intent, IdentitasConstants.LOGIN_ACTIVITY_REQUEST_CODE)
                         }
                         else{
+                            Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show()
                             Log.e(TAG, "Not connected to internet !")
                         }
                     }

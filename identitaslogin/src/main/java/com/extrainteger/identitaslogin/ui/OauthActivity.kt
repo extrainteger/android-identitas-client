@@ -16,7 +16,6 @@ import android.webkit.*
 import com.extrainteger.identitaslogin.R
 import kotlinx.android.synthetic.main.activity_oauth.*
 
-
 class OauthActivity : Activity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +26,7 @@ class OauthActivity : Activity(){
     }
 
     private fun getTokenFromProvider(code: String?, intent: Intent) {
-        val restAdapter = RestAdapter()
+        val restAdapter = RestAdapter(intent)
         restAdapter.apiClient?.getNewAccessToken(code,
                 intent.getStringExtra(IdentitasConstants.CLIENT_ID_FIELD),
                 intent.getStringExtra(IdentitasConstants.CLIENT_SECRET_FIELD),
@@ -37,7 +36,6 @@ class OauthActivity : Activity(){
             override fun onResponse(call: Call<AuthToken>?, response: Response<AuthToken>?) {
                 progressbar.visibility = View.GONE
                 if (response?.isSuccessful!!){
-                    println("onResponse seccess, provider token : " + response.body()?.accessToken)
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(IdentitasConstants.ACCESS_TOKEN_FIELD, response.body()?.accessToken)
                     tokenIntent.putExtra(IdentitasConstants.REFRESH_TOKEN_FIELD, response.body()?.refreshToken)
@@ -46,7 +44,6 @@ class OauthActivity : Activity(){
                     finish()
                 }
                 else{
-                    println("onResponse failed")
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(IdentitasConstants.GET_TOKEN_ERROR_CODE_FIELD, response.code())
                     setResult(RESULT_OK, tokenIntent)
@@ -66,11 +63,13 @@ class OauthActivity : Activity(){
 
     private fun clearWebviewCookies(){
         CookieSyncManager.createInstance(this)
-        var cookieManager = CookieManager.getInstance()
+        val cookieManager = CookieManager.getInstance()
         cookieManager.removeAllCookie()
     }
 
     private fun showLoginPage(intent: Intent) {
+        val extraHeaders = HashMap<String, String>()
+        extraHeaders[IdentitasConstants.REFERER_FIELD] = intent.getStringExtra(IdentitasConstants.REFERER_FIELD)
         horizontal_progressbar.max = 100
         val webSettings = webView.settings
         webSettings.allowFileAccess = false
@@ -79,7 +78,7 @@ class OauthActivity : Activity(){
         webView.isVerticalScrollBarEnabled = false
         webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE;
         webView.isHorizontalScrollBarEnabled = false
-        webView.loadUrl(getLoginUrl(intent))
+        webView.loadUrl(getLoginUrl(intent), extraHeaders)
         webView.webChromeClient = WebChromeClientDemo()
         webView.webViewClient = object : WebViewClient(){
 
@@ -127,7 +126,7 @@ class OauthActivity : Activity(){
     }
 
     private fun getLoginUrl(intent: Intent): String{
-        return IdentitasConstants.LOGIN_URL_VALUE +
+        return intent.getStringExtra(IdentitasConstants.BASE_URL_FIELD)+"/oauth/authorize" +
                 "?"+IdentitasConstants.CLIENT_ID_FIELD + "=" + intent.getStringExtra(IdentitasConstants.CLIENT_ID_FIELD) +
                 "&"+IdentitasConstants.RESPONSE_TYPE_FIELD+"="+IdentitasConstants.RESPONSE_TYPE_VALUE +
                 "&"+IdentitasConstants.REDIRECT_URI_FIELD+"=" + intent.getStringExtra(IdentitasConstants.REDIRECT_URI_FIELD) +
