@@ -23,8 +23,8 @@
 
         <ProgressBar
             android:id="@+id/horizontal_progressbar"
-            android:minHeight="2dp"
-            android:maxHeight="2dp"
+            android:minHeight="4dp"
+            android:maxHeight="4dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             style="@android:style/Widget.ProgressBar.Horizontal"
