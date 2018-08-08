@@ -2,6 +2,7 @@
 
 [![](https://jitpack.io/v/extrainteger/android-identitas-client.svg)](https://jitpack.io/#extrainteger/android-identitas-client)
 
+
 "Identitas" is a project for centralizing peoples identity so people can easily use their identities to access various apps in the future. This library are part of that whole project, serves as oAuth in the project.
 
 This library written in ``Kotlin``. Sorry for inconsistency or dirty code, please give feedback to make this library better.
@@ -20,7 +21,7 @@ allprojects {
 next, add the following code to app-level ``build.gradle`` 
 ```groovy
 dependencies {
-    compile 'com.github.extrainteger:android-identitas-client:0.1.4'
+    implementation 'com.github.extrainteger:android-identitas-client:0.2.6'
 }
 ```
 
@@ -41,11 +42,13 @@ Initialize a config in ``onCreate()`` method to setting up the login button in y
     String client_id = "your_client_id";
     String client_secret = "your_client_secret";
     String redirect_uri = "your_client_id";
+    String base_url = "your_base_url"
+    String app_referer = "your_app_referer"
     List<String> scopes = new ArrayList<>(); //you can leave it with empty data
     scopes.add(IdentitasScope.Companion.getPUBLIC()); // this addition just an example
 
     IdentitasConfig config = 
-            new IdentitasConfig(context, client_id, client_secret, redirect_uri, scopes);
+            new IdentitasConfig(context, base_url, client_id, client_secret, redirect_uri, scopes, app_referer);
     
     loginButton.configure(config);
 ```
