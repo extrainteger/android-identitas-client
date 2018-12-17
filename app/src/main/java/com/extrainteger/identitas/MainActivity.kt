@@ -20,17 +20,21 @@ class MainActivity : AppCompatActivity() {
         val client_id = "[your client id]"
         val client_secret = "[your client secret]"
         val redirect_uri = "[your redirect uri]"
+        val base_url = "[base url]"
+        val app_referer = "[app_referer]"
         //scope
         val scope: MutableList<String> = ArrayList()
         scope.add(IdentitasScope.PUBLIC)
         scope.add(IdentitasScope.EMAIL)
         //add all data to config
         val config = IdentitasConfig(
-                this@MainActivity,
-                client_id,
-                client_secret,
-                redirect_uri,
-                scope
+            this@MainActivity,
+            base_url,
+            client_id,
+            client_secret,
+            redirect_uri,
+            scope,
+            app_referer
         )
         //use config to configure oAuth
         tvLogin.configure(config)

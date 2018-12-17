@@ -69,7 +69,9 @@ class OauthActivity : Activity(){
 
     private fun showLoginPage(intent: Intent) {
         val extraHeaders = HashMap<String, String>()
-        extraHeaders[IdentitasConstants.REFERER_FIELD] = intent.getStringExtra(IdentitasConstants.REFERER_FIELD)
+        if (intent.getStringExtra(IdentitasConstants.REFERER_FIELD)!=null) {
+            extraHeaders[IdentitasConstants.REFERER_FIELD] = intent.getStringExtra(IdentitasConstants.REFERER_FIELD)
+        }
         horizontal_progressbar.max = 100
         val webSettings = webView.settings
         webSettings.allowFileAccess = false
