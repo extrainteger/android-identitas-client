@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity() {
         val app_referer = "[app_referer]"
         //scope
         val scope: MutableList<String> = ArrayList()
-        scope.add(IdentitasScope.PUBLIC)
-        scope.add(IdentitasScope.EMAIL)
+        scope.add(SymbolicScope.PUBLIC)
+        scope.add(SymbolicScope.EMAIL)
         //add all data to config
-        val config = IdentitasConfig(
+        val config = SymbolicConfig(
             this@MainActivity,
             base_url,
             client_id,
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 tvLogin.visibility = View.INVISIBLE
             }
 
-            override fun failure(exception: IdentitasException) {
+            override fun failure(exception: SymbolicException) {
                 //do some handle when this login got error
                 Log.e("auth error", exception.message)
             }

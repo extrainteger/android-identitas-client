@@ -3,7 +3,7 @@ package com.extrainteger.identitaslogin
 /**
  * Created by ali on 06/12/17.
  */
-class IdentitasConstants {
+class SymbolicConstants {
     companion object {
             val LOGIN_ACTIVITY_REQUEST_CODE = 212
             val CLIENT_ID_FIELD = "client_id"

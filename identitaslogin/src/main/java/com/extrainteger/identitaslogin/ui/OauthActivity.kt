@@ -3,7 +3,7 @@ package com.extrainteger.identitaslogin.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.extrainteger.identitaslogin.IdentitasConstants
+import com.extrainteger.identitaslogin.SymbolicConstants
 import com.extrainteger.identitaslogin.api.RestAdapter
 import com.extrainteger.identitaslogin.models.AuthToken
 import retrofit2.Call
@@ -28,24 +28,24 @@ class OauthActivity : Activity(){
     private fun getTokenFromProvider(code: String?, intent: Intent) {
         val restAdapter = RestAdapter(intent)
         restAdapter.apiClient?.getNewAccessToken(code,
-                intent.getStringExtra(IdentitasConstants.CLIENT_ID_FIELD),
-                intent.getStringExtra(IdentitasConstants.CLIENT_SECRET_FIELD),
-                intent.getStringExtra(IdentitasConstants.REDIRECT_URI_FIELD),
-                IdentitasConstants.GRANT_TYPE)?.enqueue(object : Callback<AuthToken>{
+                intent.getStringExtra(SymbolicConstants.CLIENT_ID_FIELD),
+                intent.getStringExtra(SymbolicConstants.CLIENT_SECRET_FIELD),
+                intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD),
+                SymbolicConstants.GRANT_TYPE)?.enqueue(object : Callback<AuthToken>{
 
             override fun onResponse(call: Call<AuthToken>?, response: Response<AuthToken>?) {
                 progressbar.visibility = View.GONE
                 if (response?.isSuccessful!!){
                     val tokenIntent = Intent()
-                    tokenIntent.putExtra(IdentitasConstants.ACCESS_TOKEN_FIELD, response.body()?.accessToken)
-                    tokenIntent.putExtra(IdentitasConstants.REFRESH_TOKEN_FIELD, response.body()?.refreshToken)
-                    tokenIntent.putExtra(IdentitasConstants.TOKEN_TYPE_FIELD, response.body()?.tokenType)
+                    tokenIntent.putExtra(SymbolicConstants.ACCESS_TOKEN_FIELD, response.body()?.accessToken)
+                    tokenIntent.putExtra(SymbolicConstants.REFRESH_TOKEN_FIELD, response.body()?.refreshToken)
+                    tokenIntent.putExtra(SymbolicConstants.TOKEN_TYPE_FIELD, response.body()?.tokenType)
                     setResult(RESULT_OK, tokenIntent)
                     finish()
                 }
                 else{
                     val tokenIntent = Intent()
-                    tokenIntent.putExtra(IdentitasConstants.GET_TOKEN_ERROR_CODE_FIELD, response.code())
+                    tokenIntent.putExtra(SymbolicConstants.GET_TOKEN_ERROR_CODE_FIELD, response.code())
                     setResult(RESULT_OK, tokenIntent)
                     finish()
                 }
@@ -54,7 +54,7 @@ class OauthActivity : Activity(){
             override fun onFailure(call: Call<AuthToken>?, t: Throwable?) {
                 progressbar.visibility = View.GONE
                 val tokenIntent = Intent()
-                tokenIntent.putExtra(IdentitasConstants.GET_TOKEN_EXCEPTION_FIELD, t?.message)
+                tokenIntent.putExtra(SymbolicConstants.GET_TOKEN_EXCEPTION_FIELD, t?.message)
                 setResult(RESULT_OK, tokenIntent)
                 finish()
             }
@@ -69,8 +69,8 @@ class OauthActivity : Activity(){
 
     private fun showLoginPage(intent: Intent) {
         val extraHeaders = HashMap<String, String>()
-        if (intent.getStringExtra(IdentitasConstants.REFERER_FIELD)!=null) {
-            extraHeaders[IdentitasConstants.REFERER_FIELD] = intent.getStringExtra(IdentitasConstants.REFERER_FIELD)
+        if (intent.getStringExtra(SymbolicConstants.REFERER_FIELD)!=null) {
+            extraHeaders[SymbolicConstants.REFERER_FIELD] = intent.getStringExtra(SymbolicConstants.REFERER_FIELD)
         }
         horizontal_progressbar.max = 100
         val webSettings = webView.settings
@@ -94,7 +94,7 @@ class OauthActivity : Activity(){
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                if (url!!.startsWith(intent.getStringExtra(IdentitasConstants.REDIRECT_URI_FIELD))){
+                if (url!!.startsWith(intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD))){
                     getTokenFromProvider(getUrlParams(url), intent)
                     content.visibility = View.INVISIBLE
                     progressbar.visibility = View.VISIBLE
@@ -128,11 +128,11 @@ class OauthActivity : Activity(){
     }
 
     private fun getLoginUrl(intent: Intent): String{
-        return intent.getStringExtra(IdentitasConstants.BASE_URL_FIELD)+"/oauth/authorize" +
-                "?"+IdentitasConstants.CLIENT_ID_FIELD + "=" + intent.getStringExtra(IdentitasConstants.CLIENT_ID_FIELD) +
-                "&"+IdentitasConstants.RESPONSE_TYPE_FIELD+"="+IdentitasConstants.RESPONSE_TYPE_VALUE +
-                "&"+IdentitasConstants.REDIRECT_URI_FIELD+"=" + intent.getStringExtra(IdentitasConstants.REDIRECT_URI_FIELD) +
-                "&"+IdentitasConstants.SCOPE_FIELD+"="+intent.getStringExtra(IdentitasConstants.SCOPE_FIELD)
+        return intent.getStringExtra(SymbolicConstants.BASE_URL_FIELD)+"/oauth/authorize" +
+                "?"+SymbolicConstants.CLIENT_ID_FIELD + "=" + intent.getStringExtra(SymbolicConstants.CLIENT_ID_FIELD) +
+                "&"+SymbolicConstants.RESPONSE_TYPE_FIELD+"="+SymbolicConstants.RESPONSE_TYPE_VALUE +
+                "&"+SymbolicConstants.REDIRECT_URI_FIELD+"=" + intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD) +
+                "&"+SymbolicConstants.SCOPE_FIELD+"="+intent.getStringExtra(SymbolicConstants.SCOPE_FIELD)
     }
 
 

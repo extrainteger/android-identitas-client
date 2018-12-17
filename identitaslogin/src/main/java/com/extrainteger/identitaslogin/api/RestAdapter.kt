@@ -1,7 +1,7 @@
 package com.extrainteger.identitaslogin.api
 
 import android.content.Intent
-import com.extrainteger.identitaslogin.IdentitasConstants
+import com.extrainteger.identitaslogin.SymbolicConstants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
@@ -16,12 +16,12 @@ class RestAdapter(intent: Intent){
 
     init {
         val httpClient = OkHttpClient.Builder()
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
-        httpClient.addInterceptor(logging)
+//        val logging = HttpLoggingInterceptor()
+//        logging.level = HttpLoggingInterceptor.Level.BODY
+//        httpClient.addInterceptor(logging)
 
         retrofit = Retrofit.Builder()
-                .baseUrl(intent.getStringExtra(IdentitasConstants.BASE_URL_FIELD))
+                .baseUrl(intent.getStringExtra(SymbolicConstants.BASE_URL_FIELD))
                 .client(httpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

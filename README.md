@@ -31,7 +31,7 @@ I created this library as close as possible with existing usage like twitter and
 ##### First
 Put this ``element`` to your ``activity_login.xml``
 ```xml
-    <com.extrainteger.identitaslogin.ui.IdentitasLoginButton
+    <com.extrainteger.identitaslogin.ui.SymbolicLoginButton
             android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

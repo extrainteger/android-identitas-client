@@ -10,13 +10,6 @@ import android.util.TypedValue
 import android.view.View
 import com.extrainteger.identitaslogin.*
 import com.extrainteger.identitaslogin.models.AuthToken
-import android.util.DisplayMetrics
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.Drawable
-import android.os.Build
-import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.widget.Toast
 import com.extrainteger.identitaslogin.utils.ConnectionState
 
@@ -24,12 +17,12 @@ import com.extrainteger.identitaslogin.utils.ConnectionState
 /**
  * Created by ali on 04/12/17.
  */
-class IdentitasLoginButton: Button{
+class SymbolicLoginButton: Button{
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyle: Int): super(context, attrs, defStyle)
 
-    private var config: IdentitasConfig? = null
+    private var config: SymbolicConfig? = null
     private var mCallback: Callback<AuthToken>? = null
     private val TAG = "Login Button"
 
@@ -61,13 +54,13 @@ class IdentitasLoginButton: Button{
                     if (config?.CLIENT_ID!=null && config?.CLIENT_SCRET!=null && config?.REDIRECT_URI!=null){
                         if (ConnectionState(config?.activity).isConnected()){
                             val intent = Intent(config?.activity, OauthActivity::class.java)
-                            intent.putExtra(IdentitasConstants.BASE_URL_FIELD, config?.BASE_URL)
-                            intent.putExtra(IdentitasConstants.CLIENT_ID_FIELD, config?.CLIENT_ID)
-                            intent.putExtra(IdentitasConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
-                            intent.putExtra(IdentitasConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
-                            intent.putExtra(IdentitasConstants.SCOPE_FIELD, getScope(config?.SCOPES))
-                            intent.putExtra(IdentitasConstants.REFERER_FIELD, config?.REFERER)
-                            config?.activity?.startActivityForResult(intent, IdentitasConstants.LOGIN_ACTIVITY_REQUEST_CODE)
+                            intent.putExtra(SymbolicConstants.BASE_URL_FIELD, config?.BASE_URL)
+                            intent.putExtra(SymbolicConstants.CLIENT_ID_FIELD, config?.CLIENT_ID)
+                            intent.putExtra(SymbolicConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
+                            intent.putExtra(SymbolicConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
+                            intent.putExtra(SymbolicConstants.SCOPE_FIELD, getScope(config?.SCOPES))
+                            intent.putExtra(SymbolicConstants.REFERER_FIELD, config?.REFERER)
+                            config?.activity?.startActivityForResult(intent, SymbolicConstants.LOGIN_ACTIVITY_REQUEST_CODE)
                         }
                         else{
                             Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show()
@@ -96,24 +89,24 @@ class IdentitasLoginButton: Button{
         return joined
     }
 
-    fun configure(config: IdentitasConfig){
+    fun configure(config: SymbolicConfig){
         this.config = config
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == IdentitasConstants.LOGIN_ACTIVITY_REQUEST_CODE){
+        if (requestCode == SymbolicConstants.LOGIN_ACTIVITY_REQUEST_CODE){
             if (resultCode == RESULT_OK){
                 mCallback?.success(Result(AuthToken(
-                        data?.getStringExtra(IdentitasConstants.ACCESS_TOKEN_FIELD),
-                        data?.getStringExtra(IdentitasConstants.REFRESH_TOKEN_FIELD),
-                        data?.getStringExtra(IdentitasConstants.TOKEN_TYPE_FIELD)), null)
+                        data?.getStringExtra(SymbolicConstants.ACCESS_TOKEN_FIELD),
+                        data?.getStringExtra(SymbolicConstants.REFRESH_TOKEN_FIELD),
+                        data?.getStringExtra(SymbolicConstants.TOKEN_TYPE_FIELD)), null)
                 )
             }
-            else if (data?.getIntExtra(IdentitasConstants.GET_TOKEN_ERROR_CODE_FIELD, 0)==400){
-                mCallback?.failure(IdentitasException("Unauthorized"))
+            else if (data?.getIntExtra(SymbolicConstants.GET_TOKEN_ERROR_CODE_FIELD, 0)==400){
+                mCallback?.failure(SymbolicException("Unauthorized"))
             }
-            else if(data?.getStringExtra(IdentitasConstants.GET_TOKEN_EXCEPTION_FIELD)!=null){
-                mCallback?.failure(IdentitasException(data.getStringExtra(IdentitasConstants.GET_TOKEN_EXCEPTION_FIELD)))
+            else if(data?.getStringExtra(SymbolicConstants.GET_TOKEN_EXCEPTION_FIELD)!=null){
+                mCallback?.failure(SymbolicException(data.getStringExtra(SymbolicConstants.GET_TOKEN_EXCEPTION_FIELD)))
             }
         }
     }
