@@ -12,4 +12,5 @@ data class SymbolicConfig(
     val CLIENT_SCRET: String? = null,
     val REDIRECT_URI: String? = null,
     val SCOPES: List<String>? = null,
-    val REFERER: String? = null)
+    val REFERER: String? = null
+)

@@ -16,7 +16,7 @@ import android.webkit.*
 import com.extrainteger.symbolic.R
 import kotlinx.android.synthetic.main.activity_oauth.*
 
-class SymbolicOauthActivity : Activity(){
+class SymbolicOauthActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,19 +31,18 @@ class SymbolicOauthActivity : Activity(){
                 intent.getStringExtra(SymbolicConstants.CLIENT_ID_FIELD),
                 intent.getStringExtra(SymbolicConstants.CLIENT_SECRET_FIELD),
                 intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD),
-                SymbolicConstants.GRANT_TYPE)?.enqueue(object : Callback<SymbolicToken>{
+                SymbolicConstants.GRANT_TYPE)?.enqueue(object : Callback<SymbolicToken> {
 
             override fun onResponse(call: Call<SymbolicToken>?, response: Response<SymbolicToken>?) {
                 progressbar.visibility = View.GONE
-                if (response?.isSuccessful!!){
+                if (response?.isSuccessful!!) {
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(SymbolicConstants.ACCESS_TOKEN_FIELD, response.body()?.accessToken)
                     tokenIntent.putExtra(SymbolicConstants.REFRESH_TOKEN_FIELD, response.body()?.refreshToken)
                     tokenIntent.putExtra(SymbolicConstants.TOKEN_TYPE_FIELD, response.body()?.tokenType)
                     setResult(RESULT_OK, tokenIntent)
                     finish()
-                }
-                else{
+                } else {
                     val tokenIntent = Intent()
                     tokenIntent.putExtra(SymbolicConstants.GET_TOKEN_ERROR_CODE_FIELD, response.code())
                     setResult(RESULT_OK, tokenIntent)
@@ -61,7 +60,7 @@ class SymbolicOauthActivity : Activity(){
         })
     }
 
-    private fun clearWebviewCookies(){
+    private fun clearWebviewCookies() {
         CookieSyncManager.createInstance(this)
         val cookieManager = CookieManager.getInstance()
         cookieManager.removeAllCookie()
@@ -69,7 +68,7 @@ class SymbolicOauthActivity : Activity(){
 
     private fun showLoginPage(intent: Intent) {
         val extraHeaders = HashMap<String, String>()
-        if (intent.getStringExtra(SymbolicConstants.REFERER_FIELD)!=null) {
+        if (intent.getStringExtra(SymbolicConstants.REFERER_FIELD) != null) {
             extraHeaders[SymbolicConstants.REFERER_FIELD] = intent.getStringExtra(SymbolicConstants.REFERER_FIELD)
         }
         horizontal_progressbar.max = 100
@@ -78,11 +77,11 @@ class SymbolicOauthActivity : Activity(){
         webSettings.javaScriptEnabled = true
         webSettings.saveFormData = false
         webView.isVerticalScrollBarEnabled = false
-        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE;
+        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView.isHorizontalScrollBarEnabled = false
         webView.loadUrl(getLoginUrl(intent), extraHeaders)
         webView.webChromeClient = WebChromeClientDemo()
-        webView.webViewClient = object : WebViewClient(){
+        webView.webViewClient = object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
@@ -94,7 +93,7 @@ class SymbolicOauthActivity : Activity(){
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                if (url!!.startsWith(intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD))){
+                if (url!!.startsWith(intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD))) {
                     getTokenFromProvider(getUrlParams(url), intent)
                     content.visibility = View.INVISIBLE
                     progressbar.visibility = View.VISIBLE
@@ -117,7 +116,7 @@ class SymbolicOauthActivity : Activity(){
         }
     }
 
-    private fun getUrlParams(url: String): String{
+    private fun getUrlParams(url: String): String {
         val urlToFind = Uri.parse(url)
         val paramNames = urlToFind.getQueryParameterNames()
         var value = ""
@@ -127,11 +126,11 @@ class SymbolicOauthActivity : Activity(){
         return value
     }
 
-    private fun getLoginUrl(intent: Intent): String{
-        return intent.getStringExtra(SymbolicConstants.BASE_URL_FIELD)+"/oauth/authorize" +
-                "?"+SymbolicConstants.CLIENT_ID_FIELD + "=" + intent.getStringExtra(SymbolicConstants.CLIENT_ID_FIELD) +
-                "&"+SymbolicConstants.RESPONSE_TYPE_FIELD+"="+SymbolicConstants.RESPONSE_TYPE_VALUE +
-                "&"+SymbolicConstants.REDIRECT_URI_FIELD+"=" + intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD) +
-                "&"+SymbolicConstants.SCOPE_FIELD+"="+intent.getStringExtra(SymbolicConstants.SCOPE_FIELD)
+    private fun getLoginUrl(intent: Intent): String {
+        return intent.getStringExtra(SymbolicConstants.BASE_URL_FIELD) + "/oauth/authorize" +
+                "?" + SymbolicConstants.CLIENT_ID_FIELD + "=" + intent.getStringExtra(SymbolicConstants.CLIENT_ID_FIELD) +
+                "&" + SymbolicConstants.RESPONSE_TYPE_FIELD + "=" + SymbolicConstants.RESPONSE_TYPE_VALUE +
+                "&" + SymbolicConstants.REDIRECT_URI_FIELD + "=" + intent.getStringExtra(SymbolicConstants.REDIRECT_URI_FIELD) +
+                "&" + SymbolicConstants.SCOPE_FIELD + "=" + intent.getStringExtra(SymbolicConstants.SCOPE_FIELD)
     }
 }

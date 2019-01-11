@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient
 /**
  * Created by ali on 06/12/17.
  */
-class SymbolicRestAdapter(intent: Intent){
+class SymbolicRestAdapter(intent: Intent) {
     var retrofit: Retrofit? = null
     var symbolicApi: SymbolicApi? = null
 
