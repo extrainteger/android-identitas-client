@@ -46,8 +46,7 @@ class SymbolicExtrasActivity : AppCompatActivity() {
 
             override fun onPageFinished(view: WebView?, url: String) {
                 super.onPageFinished(view, url)
-                val newUrl = URL(url)
-                if (url == newUrl.protocol + "://" + newUrl.host + "/") {
+                if (url.contains("/login")) {
                     content.visibility = View.INVISIBLE
                     progressbar.visibility = View.VISIBLE
                     horizontal_progressbar.visibility = View.GONE
