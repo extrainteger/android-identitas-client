@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/identitaslogin" />
+            <option value="$PROJECT_DIR$/symbolic" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

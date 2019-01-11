@@ -8,11 +8,11 @@
     tools:context="com.extrainteger.identitas.MainActivity"
     android:gravity="center">
 
-    <com.extrainteger.identitaslogin.ui.SymbolicLoginButton
+    <com.extrainteger.symbolic.ui.SymbolicLoginButton
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    </com.extrainteger.identitaslogin.ui.SymbolicLoginButton>
+    </com.extrainteger.symbolic.ui.SymbolicLoginButton>
 
 </LinearLayout>

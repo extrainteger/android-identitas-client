@@ -1,13 +1,13 @@
 package com.extrainteger.identitas
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.extrainteger.identitaslogin.*
-import com.extrainteger.identitaslogin.models.AuthToken
+import com.extrainteger.symbolic.*
+import com.extrainteger.symbolic.models.SymbolicToken
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
 
@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         //use config to configure oAuth
         tvLogin.configure(config)
         //set callback to login
-        tvLogin.setCallback(object : Callback<AuthToken>(){
-            override fun success(result: Result<AuthToken>) {
+        tvLogin.setCallback(object : Callback<SymbolicToken>(){
+            override fun success(result: Result<SymbolicToken>) {
                 //do some action after this login authorized and got some token
                 Toast.makeText(this@MainActivity, "Logged in provider", Toast.LENGTH_SHORT).show()
                 tvLogin.visibility = View.INVISIBLE

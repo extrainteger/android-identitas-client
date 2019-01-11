@@ -1,1 +1,1 @@
-include ':app', ':identitaslogin'
+include ':app', ':symbolic'
