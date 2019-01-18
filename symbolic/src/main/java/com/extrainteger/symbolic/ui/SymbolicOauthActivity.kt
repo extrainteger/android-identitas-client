@@ -1,5 +1,6 @@
 package com.extrainteger.symbolic.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -21,7 +22,6 @@ class SymbolicOauthActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_oauth)
-        clearWebviewCookies()
         showLoginPage(intent)
     }
 
@@ -60,17 +60,9 @@ class SymbolicOauthActivity : Activity() {
         })
     }
 
-    private fun clearWebviewCookies() {
-        CookieSyncManager.createInstance(this)
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.removeAllCookie()
-    }
-
+    @SuppressLint("SetJavaScriptEnabled")
     private fun showLoginPage(intent: Intent) {
         val extraHeaders = HashMap<String, String>()
-        if (intent.getStringExtra(SymbolicConstants.REFERER_FIELD) != null) {
-            extraHeaders[SymbolicConstants.REFERER_FIELD] = intent.getStringExtra(SymbolicConstants.REFERER_FIELD)
-        }
         horizontal_progressbar.max = 100
         val webSettings = webView.settings
         webSettings.allowFileAccess = false

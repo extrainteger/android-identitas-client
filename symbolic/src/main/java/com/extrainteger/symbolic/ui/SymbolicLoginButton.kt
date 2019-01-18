@@ -3,11 +3,14 @@ package com.extrainteger.symbolic.ui
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.Button
 import android.util.TypedValue
 import android.view.View
+import android.webkit.CookieManager
+import android.webkit.CookieSyncManager
 import com.extrainteger.symbolic.*
 import com.extrainteger.symbolic.models.SymbolicToken
 import android.widget.Toast
@@ -58,7 +61,6 @@ class SymbolicLoginButton : Button {
                             intent.putExtra(SymbolicConstants.CLIENT_SECRET_FIELD, config?.CLIENT_SCRET)
                             intent.putExtra(SymbolicConstants.REDIRECT_URI_FIELD, config?.REDIRECT_URI)
                             intent.putExtra(SymbolicConstants.SCOPE_FIELD, getScope(config?.SCOPES))
-                            intent.putExtra(SymbolicConstants.REFERER_FIELD, config?.REFERER)
                             config?.activity?.startActivityForResult(intent, SymbolicConstants.LOGIN_ACTIVITY_REQUEST_CODE)
                         } else {
                             Toast.makeText(context, "Please check your internet connection", Toast.LENGTH_SHORT).show()
@@ -108,11 +110,21 @@ class SymbolicLoginButton : Button {
     }
 
     companion object {
-        fun loadPage(context: Context, url: String, redirect: String) {
+        fun loadPage(context: Context, url: String, redirect: String? = null) {
             val intent = Intent(context, SymbolicExtrasActivity::class.java)
             intent.putExtra(SymbolicConstants.URL, url)
             intent.putExtra(SymbolicConstants.REDIRECT_URI_FIELD, redirect)
             context.startActivity(intent)
+        }
+
+        fun logOut(context: Context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                CookieManager.getInstance().removeAllCookies(null)
+            } else {
+                CookieSyncManager.createInstance(context)
+                val cookieManager = CookieManager.getInstance()
+                cookieManager.removeAllCookie()
+            }
         }
     }
 }

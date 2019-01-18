@@ -11,8 +11,8 @@ class ExtrasActivityTest : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_extras_test)
         tes.setOnClickListener {
-            SymbolicLoginButton.loadPage(this, "http://identitas.extrainteger.com/pantaubersama/invitation/accept?invitation_token=EvvfFg2ArzedEx5ucJFP",
-                "com.pantaubersama.app://oauth")
+            SymbolicLoginButton.loadPage(this, "",
+                "")
         }
     }
 }

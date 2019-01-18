@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
             client_id,
             client_secret,
             redirect_uri,
-            scope,
-            app_referer
+            scope
         )
         //use config to configure oAuth
         tvLogin.configure(config)

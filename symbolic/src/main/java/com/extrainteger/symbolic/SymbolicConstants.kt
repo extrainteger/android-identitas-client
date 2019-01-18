@@ -19,7 +19,6 @@ class SymbolicConstants {
         val GET_TOKEN_ERROR_CODE_FIELD = "get_token_error_code"
         val GET_TOKEN_EXCEPTION_FIELD = "get_token_exception"
         val BASE_URL_FIELD = "base_url"
-        val REFERER_FIELD = "referer"
         val URL = "url"
     }
 }
