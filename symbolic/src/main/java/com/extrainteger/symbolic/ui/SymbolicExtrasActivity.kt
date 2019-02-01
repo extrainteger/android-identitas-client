@@ -30,42 +30,34 @@ class SymbolicExtrasActivity : AppCompatActivity() {
         webView.isVerticalScrollBarEnabled = false
         webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView.isHorizontalScrollBarEnabled = false
-        if (redirect != null) {
-            webView.loadUrl(url + "?" + SymbolicConstants.REDIRECT_URI_FIELD + "=" + redirect)
-        } else {
-            webView.loadUrl(url)
-        }
+        webView.loadUrl(url)
         webView.webChromeClient = WebChromeClientDemo()
         webView.webViewClient = object : WebViewClient() {
 
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            override fun onPageStarted(view: WebView?, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 progressbar.visibility = View.GONE
                 content.visibility = View.VISIBLE
                 horizontal_progressbar.visibility = View.VISIBLE
                 horizontal_progressbar.progress = 0
-            }
-
-            override fun onPageFinished(view: WebView?, url: String) {
-                super.onPageFinished(view, url)
                 if (redirect != null) {
                     if (url == redirect) {
-                        content.visibility = View.INVISIBLE
-                        progressbar.visibility = View.VISIBLE
-                        horizontal_progressbar.visibility = View.GONE
-                        horizontal_progressbar.progress = 100
                         finish()
                     }
                 } else {
-                    if (url.contains("/login")) {
-                        content.visibility = View.INVISIBLE
-                        progressbar.visibility = View.VISIBLE
-                        horizontal_progressbar.visibility = View.GONE
-                        horizontal_progressbar.progress = 100
+                    if (url.contains("/login") || url.contains("/home")) {
                         finish()
                     }
                 }
             }
+
+//            override fun onPageFinished(view: WebView?, url: String) {
+//                super.onPageFinished(view, url)
+//                content.visibility = View.INVISIBLE
+//                progressbar.visibility = View.VISIBLE
+//                horizontal_progressbar.visibility = View.GONE
+//                horizontal_progressbar.progress = 100
+//            }
 
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
