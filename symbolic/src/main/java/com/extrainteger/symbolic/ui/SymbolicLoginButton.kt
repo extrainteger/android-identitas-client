@@ -119,6 +119,12 @@ class SymbolicLoginButton : Button {
             val intent = Intent(context, SymbolicExtrasActivity::class.java)
             intent.putExtra(SymbolicConstants.URL, url)
             intent.putExtra(SymbolicConstants.REDIRECT_URI_FIELD, redirect)
+            context.startActivity(intent)
+        }
+
+        fun confirmEmail(context: Context, url: String) {
+            val intent = Intent(context, SymbolicExtrasActivity::class.java)
+            intent.putExtra(SymbolicConstants.URL, url)
             (context as Activity).startActivityForResult(intent, SymbolicConstants.LOAD_PAGE_REQUEST_CODE)
         }
 

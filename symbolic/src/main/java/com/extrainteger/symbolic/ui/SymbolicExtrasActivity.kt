@@ -48,6 +48,8 @@ class SymbolicExtrasActivity : AppCompatActivity() {
                     }
                 } else {
                     if (url.contains("/login") || url.contains("/home")) {
+                        finish()
+                    } else if (url.contains("/confirmation")) {
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
