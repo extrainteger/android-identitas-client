@@ -6,6 +6,7 @@ package com.extrainteger.symbolic
 class SymbolicConstants {
     companion object {
         val LOGIN_ACTIVITY_REQUEST_CODE = 212
+        val LOAD_PAGE_REQUEST_CODE = 1056
         val CLIENT_ID_FIELD = "client_id"
         val CLIENT_SECRET_FIELD = "client_secret"
         val REDIRECT_URI_FIELD = "redirect_uri"

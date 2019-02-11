@@ -1,5 +1,6 @@
 package com.extrainteger.symbolic.ui
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
@@ -102,6 +103,10 @@ class SymbolicLoginButton : Button {
             } else if (data?.getStringExtra(SymbolicConstants.GET_TOKEN_EXCEPTION_FIELD) != null) {
                 mCallback?.failure(SymbolicException(data.getStringExtra(SymbolicConstants.GET_TOKEN_EXCEPTION_FIELD)))
             }
+        } else if (requestCode == SymbolicConstants.LOAD_PAGE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                gotoOAuthActivity()
+            }
         }
     }
 
@@ -114,7 +119,7 @@ class SymbolicLoginButton : Button {
             val intent = Intent(context, SymbolicExtrasActivity::class.java)
             intent.putExtra(SymbolicConstants.URL, url)
             intent.putExtra(SymbolicConstants.REDIRECT_URI_FIELD, redirect)
-            context.startActivity(intent)
+            (context as Activity).startActivityForResult(intent, SymbolicConstants.LOAD_PAGE_REQUEST_CODE)
         }
 
         fun logOut(context: Context) {

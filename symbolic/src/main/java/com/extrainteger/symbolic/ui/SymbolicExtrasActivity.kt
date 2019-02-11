@@ -1,6 +1,7 @@
 package com.extrainteger.symbolic.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,10 +43,12 @@ class SymbolicExtrasActivity : AppCompatActivity() {
                 horizontal_progressbar.progress = 0
                 if (redirect != null) {
                     if (url == redirect) {
+                        setResult(Activity.RESULT_OK)
                         finish()
                     }
                 } else {
                     if (url.contains("/login") || url.contains("/home")) {
+                        setResult(Activity.RESULT_OK)
                         finish()
                     }
                 }
