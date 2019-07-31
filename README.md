@@ -21,7 +21,7 @@ allprojects {
 next, add the following code to app-level ``build.gradle`` 
 ```groovy
 dependencies {
-    implementation 'com.github.extrainteger:android-identitas-client:0.2.6'
+    implementation 'com.github.extrainteger:android-identitas-client:[latest_version]'
 }
 ```
 
