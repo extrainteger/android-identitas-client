@@ -1,4 +1,4 @@
-# Android Oauth 2 client for Identitas: Login button library
+# Android Oauth 2 client for Symbolic: Login button library
 
 [![](https://jitpack.io/v/extrainteger/android-identitas-client.svg)](https://jitpack.io/#extrainteger/android-identitas-client)
 
