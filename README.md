@@ -43,12 +43,11 @@ Initialize a config in ``onCreate()`` method to setting up the login button in y
     String client_secret = "your_client_secret";
     String redirect_uri = "your_client_id";
     String base_url = "your_base_url"
-    String app_referer = "your_app_referer"
     List<String> scopes = new ArrayList<>(); //you can leave it with empty data
     scopes.add(IdentitasScope.Companion.getPUBLIC()); // this addition just an example
 
     IdentitasConfig config = 
-            new IdentitasConfig(context, base_url, client_id, client_secret, redirect_uri, scopes, app_referer);
+            new IdentitasConfig(context, base_url, client_id, client_secret, redirect_uri, scopes);
     
     loginButton.configure(config);
 ```
