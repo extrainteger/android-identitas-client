@@ -46,8 +46,8 @@ Initialize a config in ``onCreate()`` method to setting up the login button in y
     List<String> scopes = new ArrayList<>(); //you can leave it with empty data
     scopes.add(IdentitasScope.Companion.getPUBLIC()); // this addition just an example
 
-    IdentitasConfig config = 
-            new IdentitasConfig(context, base_url, client_id, client_secret, redirect_uri, scopes);
+    SymbolicConfig config = 
+            new SymbolicConfig(context, base_url, client_id, client_secret, redirect_uri, scopes);
     
     loginButton.configure(config);
 ```
