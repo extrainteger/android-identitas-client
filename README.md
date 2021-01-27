@@ -77,6 +77,12 @@ Implement ``onActivityResult()`` method in your activity, do something like writ
     }
 ```
 
+##### Note:
+Once you've done with Symbolic, don't forget to logout Symbolic, here's the code:
+```java
+    SymbolicLoginButton.logOut(context);
+```
+
 ### Library
 [Retrofit](http://square.github.io/retrofit/)
 
