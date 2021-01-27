@@ -54,9 +54,9 @@ Initialize a config in ``onCreate()`` method to setting up the login button in y
 ##### Next step
 Set ``callback`` for the Login Button 
 ```java
-    loginButton.setCallback(new Callback<AuthToken>() {
+    loginButton.setCallback(new Callback<SymbolicToken>() {
             @Override
-            public void success(@NotNull Result<AuthToken> result) {
+            public void success(@NotNull Result<SymbolicToken> result) {
                 //do some action after this login authorized and got some token
             }
 
